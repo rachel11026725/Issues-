@@ -109,10 +109,12 @@ class CatCodingPanel {
 
 		// Handle messages from the webview
 		this._panel.webview.onDidReceiveMessage(
-			message => {
+			(message: { command?: string; text?: string }) => {
 				switch (message.command) {
 					case 'alert':
-						vscode.window.showErrorMessage(message.text);
+						if (typeof message.text === 'string') {
+							vscode.window.showErrorMessage(message.text);
+						}
 						return;
 				}
 			},
